@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Forms\FormConflictDetails-old.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormConflictDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormConflictList-old.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormConflictList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormReservation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormRoutePlan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\FormRoutePlan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\FormReservation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\FormConflictList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\FormConflictDetails.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

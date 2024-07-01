@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+	id="NewDataSet" 
+	targetNamespace="http://www.transport.bombardier.com/2014/RcsCmm" 
+	xmlns:mstns="http://www.transport.bombardier.com/2014/RcsCmm" 
+	xmlns="http://www.transport.bombardier.com/2014/RcsCmm" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" 
+	attributeFormDefault="qualified" 
+	elementFormDefault="qualified" 
+	xmlns:app1="http://www.transport.bombardier.com/2014/RcsCmm/wds">
+	
+  <xs:import namespace="http://www.transport.bombardier.com/2014/RcsCmm/wds" schemaLocation="WDSChemaData.xsd" />
+  
+  <xs:element name="Message" msdata:Prefix="rcs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hdr" form="unqualified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="source" form="unqualified" type="xs:string" minOccurs="0" />
+              <xs:element name="messageId" form="unqualified" type="xs:string" minOccurs="0" />
+              <xs:element name="content" form="unqualified" type="xs:string" minOccurs="0" />
+              <xs:element name="correlationId" form="unqualified" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="data" form="unqualified">
+          <xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element ref="app1:processReportRequest" />
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element ref="app1:processStateChangeRequest" />
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element ref="app1:processStopRequest" />
+				</xs:sequence>
+			</xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msdata:Prefix="rcs">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Message" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

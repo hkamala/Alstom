@@ -1,0 +1,1 @@
+D:\ALSTOMWork\New\ConflictManagementService\ConflictManagementService\ConflictManagementService.csproj;x86

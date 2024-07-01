@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ATSEncryptionTool", "ATSEncryptionTool.csproj", "{C5BB9FBC-0E5B-474E-9DF3-85CA9013BCA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityLibrary", "..\..\libraries\SecurityLibrary\SecurityLibrary.csproj", "{B26F8266-B176-4567-801B-64AD5FF2A705}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5BB9FBC-0E5B-474E-9DF3-85CA9013BCA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BB9FBC-0E5B-474E-9DF3-85CA9013BCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BB9FBC-0E5B-474E-9DF3-85CA9013BCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BB9FBC-0E5B-474E-9DF3-85CA9013BCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B26F8266-B176-4567-801B-64AD5FF2A705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26F8266-B176-4567-801B-64AD5FF2A705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26F8266-B176-4567-801B-64AD5FF2A705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26F8266-B176-4567-801B-64AD5FF2A705}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {554F2924-5B1C-4F45-B90B-26F9DF79089F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|d:\\june17\\alstom-main\\cms\\services\\timedistancegraphservice\\timedistancegraphservice\\timedistancegraphservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|solutionrelative:timedistancegraphservice\\timedistancegraphservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|d:\\june17\\alstom-main\\cms\\services\\timedistancegraphservice\\timedistancegraphservice\\timedistancegraphservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|solutionrelative:timedistancegraphservice\\timedistancegraphservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|d:\\june17\\alstom-main\\cms\\services\\timedistancegraphservice\\timedistancegraphservice\\messaging\\timedistancegraphdatahandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38FC2830-2CCA-4C05-B5D3-D9AC80472721}|TimeDistanceGraphService\\TimeDistanceGraphService.csproj|solutionrelative:timedistancegraphservice\\messaging\\timedistancegraphdatahandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TimeDistanceGraphService",
+              "DocumentMoniker": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "RelativeDocumentMoniker": "TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "ToolTip": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "RelativeToolTip": "TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-20T12:17:21.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TimeDistanceGraphService",
+              "DocumentMoniker": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "RelativeDocumentMoniker": "TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "ToolTip": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "RelativeToolTip": "TimeDistanceGraphService\\TimeDistanceGraphService.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-20T12:17:11.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TimeDistanceGraphDataHandler.cs",
+              "DocumentMoniker": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\Messaging\\TimeDistanceGraphDataHandler.cs",
+              "RelativeDocumentMoniker": "TimeDistanceGraphService\\Messaging\\TimeDistanceGraphDataHandler.cs",
+              "ToolTip": "D:\\June17\\Alstom-main\\cms\\services\\TimeDistanceGraphService\\TimeDistanceGraphService\\Messaging\\TimeDistanceGraphDataHandler.cs",
+              "RelativeToolTip": "TimeDistanceGraphService\\Messaging\\TimeDistanceGraphDataHandler.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAwBYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-03T21:13:01.968Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

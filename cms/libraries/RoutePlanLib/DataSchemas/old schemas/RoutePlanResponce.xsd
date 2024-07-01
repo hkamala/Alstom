@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="RoutePlanResponce"
+    targetNamespace="http://tempuri.org/RoutePlanResponce.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/RoutePlanResponce.xsd"
+    xmlns:mstns="http://tempuri.org/RoutePlanResponce.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="rcsMsg">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="hdr"/>
+				<xs:element ref="data"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="hdr">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="schema" type="xs:string"/>
+				<xs:element name="sender" type="xs:string"/>
+				<xs:element name="utc" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ActionPlan"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ActionPlan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Trains" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Train" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="dummy" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Train">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Paths">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Path" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="dummy" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CtcTrainId" type="xs:string"/>
+				<xs:element name="ServiceName" type="xs:string"/>
+				<xs:element name="TripID" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Path">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MasterActions">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="MasterAction" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="dummy" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string"/>
+			<xs:attribute name="TripID" type="xs:int"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="MasterAction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Actions">
+					<xs:complexType>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element ref="RCA"/>
+							<xs:element ref="SCA"/>
+							<xs:element ref="ITA"/>
+							<xs:element ref="SCRA"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string"/>
+			<xs:attribute name="start" type="xs:string"/>
+			<xs:attribute name="end" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="BaseAction">
+		<xs:sequence>
+			<xs:element ref="Command" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="seqno" type="xs:int" default="0"/>
+		<xs:attribute name="executionTime" type="xs:string"/>
+		<xs:attribute name="actionPoint" type="xs:string"/>
+		<xs:attribute name="timingMode" type="xs:int" default="0"/>
+		<xs:attribute name="secs" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:element name="Command">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Properties"/>
+			</xs:sequence>
+			<xs:attribute name="cmd" type="xs:string"/>
+			<xs:attribute name="target" type="xs:string"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Properties">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Property" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="dummy" type="xs:int"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Property">
+		<xs:complexType>
+			<xs:attribute name="condition" type="xs:string"/>
+			<xs:attribute name="test" type="xs:string"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="RCA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction">
+					<xs:sequence></xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="SCA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction">
+					<xs:sequence></xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ITA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction">
+					<xs:sequence></xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SCRA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction">
+					<xs:sequence></xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

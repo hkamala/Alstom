@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\Configuration.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\RoutePlan.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.RoutePlan&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\RoutePlanResponce.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.RoutePlanResponce&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\CancelRoutePlan.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.CancelRoutePlan&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\CancelRoutePlanResponce.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.CancelRoutePlanResponce&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\PretestRequest.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.PretestRequest&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\PretestResponse.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.PretestResponse&#xD;&#xA;ref-binaries\xsd\xsd.exe $(MSBuildProjectDirectory)\DataSchemas\ServiceRoutePlanRequest.xsd /classes /o:$(MSBuildProjectDirectory)\DataSchemas /namespace:XSD.ServiceRoutePlanRequest&#xD;&#xA;" />
+  </Target>
+  <ItemGroup>
+    <PackageReference Include="Apache.NMS.ActiveMQ" Version="2.1.0" />
+    <PackageReference Include="Serilog" Version="4.0.0" />
+  </ItemGroup>
+</Project>

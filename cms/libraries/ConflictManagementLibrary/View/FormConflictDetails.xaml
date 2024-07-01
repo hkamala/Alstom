@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="ConflictManagementLibrary.View.FormConflictDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ConflictManagementLibrary.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="1520" Height="800" BorderBrush="Black" BorderThickness="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Current Conflict Section-->
+            <TreeView SelectionChanged="tvConflictsCurrent_SelectionChanged"  LostFocus="tvConflictsCurrent_LostFocus" Name="tvConflictsCurrent" Grid.Column="0" Margin="10">
+
+            </TreeView>
+
+            <!-- Conflict Details Section -->
+            <StackPanel Name="gbConflictSummary" Grid.Column="1" Margin="10">
+                <TextBlock Text="Conflict Details" FontSize="20" FontWeight="Bold" Margin="5" />
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Name="lblConflictType" Text="Conflict Type:" Margin="5,10,0,0" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Name="txtConflictType" Margin="5,0,0,10" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock Name="lblSubtype" Text="Conflict Subtype:" Margin="5,10,0,0" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Name="txtSubtype" Height="200" Margin="5,0,0,10" Grid.Row="1" Grid.Column="1"/>
+
+                    <TextBlock Name="lblConflictLocation" Text="Conflict Location:" Margin="5,10,0,0" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Name="txtConflictLocation" Margin="5,0,0,10" Grid.Row="2" Grid.Column="1"/>
+
+                    <TextBlock Name="lblConflictTime" Text="Conflict Time:" Margin="5,10,0,0" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Name="txtConflictTime" Margin="5,0,0,10" Grid.Row="3" Grid.Column="1"/>
+
+                    <TextBlock Name="lblConflictEntity" Text="Conflict Entity:" Margin="5,10,0,0" Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Name="txtConflictEntity" Margin="5,0,0,10" Grid.Row="4" Grid.Column="1"/>
+
+                    <TextBlock Name="lblConflictDescription" Text="Conflict Description:" Margin="5,10,0,0" Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Name="txtConflictDescription" Height="100" Margin="5,0,0,10" Grid.Row="5" Grid.Column="1"/>
+
+                    <TextBlock Name="lblConflictResolution" Text="Conflict Resolution:" Margin="5,10,0,0" Grid.Row="6" Grid.Column="0"/>
+                    <TextBox Name="txtConflictResolution" Margin="5,0,0,10" Grid.Row="6" Grid.Column="1"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="132,20,0,20">
+                    <!--<Button Click="btnAccept_Click" Name="btnAccept" Foreground="Blue" FontWeight="Bold" Content="Accept" Margin="10,40, 0, 0" Padding="40,10" FontSize="20" />
+                    <Button Click="btnReject_Click" Name="btnReject" Foreground="Blue" FontWeight="Bold" Content="Reject" Margin="230,40, 0, 0" Padding="40,10" FontSize="20" />-->
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Trip Details Section -->
+            <StackPanel Name="gbRouteDetails" Grid.Column="2" Margin="10">
+                <TextBlock Text="Trip Details" FontSize="20" FontWeight="Bold" Margin="5" />
+                <ListView Name="lvPlan" BorderThickness="1" BorderBrush="Gray" Height="500" Margin="5">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ListViewItem Content="Platform" Grid.Column="0" FontWeight="Bold" Margin="5" />
+                            <ListViewItem Content="Arrival" Grid.Column="1" FontWeight="Bold" Margin="5"/>
+                            <ListViewItem Content="Depart" Grid.Column="2" FontWeight="Bold" Margin="5"/>
+                        </Grid>
+                    </ScrollViewer>
+                </ListView>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Window>
