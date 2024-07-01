@@ -11,14 +11,14 @@
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>5d45b315-f28d-432e-9f76-59c853996732</PackageIdentityName>
     <PackageIdentityPublisher>CN=abdulhafeel</PackageIdentityPublisher>
-    <IntermediateOutputPath>D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\obj\Debug\net8.0-windows10.0.22621.0\win-x64\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\obj\Debug\net8.0-windows10.0.22621.0\win-x64\</IntermediateOutputPath>
     <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
     <PackageRegistrationPath>
     </PackageRegistrationPath>
     <RemoveNonLayoutFiles>false</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\AppX</LayoutDir>
+    <LayoutDir>D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\AppX</LayoutDir>
     <RegisteredManifestChecksum>4F8E57C45947AD47011EFBC2569F79E8401379820CEEF68A5DFADFCA534AA0FB</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>5d45b315-f28d-432e-9f76-59c853996732_1.0.0.0_neutral__gnp1gxyxansae</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>5d45b315-f28d-432e-9f76-59c853996732_gnp1gxyxansae!App</RegisteredUserModeAppID>
@@ -27,44 +27,44 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\AppxManifest.xml">
+    <AppXManifest Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-07-01T06:03:52.166</Modified>
+      <Modified>2024-07-01T06:54:07.306</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\resources.pri">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <Modified>2024-06-28T10:38:47.725</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.pri">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.pri">
       <PackagePath>ConflictManagementLibrary.pri</PackagePath>
       <Modified>2024-06-28T10:38:39.212</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.runtimeconfig.json">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.runtimeconfig.json">
       <PackagePath>ConflictManagementService.runtimeconfig.json</PackagePath>
-      <Modified>2024-06-28T10:38:47.656</Modified>
+      <Modified>2024-07-01T06:54:07.104</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.dll">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.dll">
       <PackagePath>ConflictManagementService.dll</PackagePath>
-      <Modified>2024-06-28T10:38:47.476</Modified>
+      <Modified>2024-07-01T06:54:06.816</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.dll.config">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.dll.config">
       <PackagePath>ConflictManagementService.dll.config</PackagePath>
       <Modified>2024-06-24T08:30:52.489</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.dll">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.dll">
       <PackagePath>ConflictManagementLibrary.dll</PackagePath>
-      <Modified>2024-07-01T06:03:44.756</Modified>
+      <Modified>2024-07-01T06:53:58.369</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\obj\Debug\net8.0-windows10.0.22621.0\win-x64\apphost.exe">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\obj\Debug\net8.0-windows10.0.22621.0\win-x64\apphost.exe">
       <PackagePath>ConflictManagementService.exe</PackagePath>
-      <Modified>2024-06-28T10:38:47.512</Modified>
+      <Modified>2024-07-01T06:54:06.877</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.deps.json">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\bin\Debug\net8.0-windows10.0.22621.0\win-x64\ConflictManagementService.deps.json">
       <PackagePath>ConflictManagementService.deps.json</PackagePath>
-      <Modified>2024-06-28T10:38:47.653</Modified>
+      <Modified>2024-07-01T06:54:07.027</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\abdulhafeel\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.22621.31\lib\net6.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>
@@ -250,59 +250,59 @@
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.dll</PackagePath>
       <Modified>2024-06-07T06:05:24.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\RailgraphLib\bin\Debug\net8.0\RailgraphLib.dll">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\RailgraphLib\bin\Debug\net8.0\RailgraphLib.dll">
       <PackagePath>RailgraphLib.dll</PackagePath>
-      <Modified>2024-07-01T06:19:54.829</Modified>
+      <Modified>2024-07-01T06:53:49.216</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\RoutePlanLib\bin\Debug\net8.0\RoutePlanLib.dll">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\RoutePlanLib\bin\Debug\net8.0\RoutePlanLib.dll">
       <PackagePath>RoutePlanLib.dll</PackagePath>
-      <Modified>2024-07-01T06:19:56.196</Modified>
+      <Modified>2024-07-01T06:53:49.189</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.dll.config">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\bin\Debug\net8.0-windows10.0.22621.0\ConflictManagementLibrary.dll.config">
       <PackagePath>ConflictManagementLibrary.dll.config</PackagePath>
       <Modified>2024-06-24T08:30:35.119</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormConflictDetails.xbf">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormConflictDetails.xbf">
       <PackagePath>ConflictManagementLibrary\View\FormConflictDetails.xbf</PackagePath>
       <Modified>2024-06-28T10:38:38.399</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormConflictList.xbf">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormConflictList.xbf">
       <PackagePath>ConflictManagementLibrary\View\FormConflictList.xbf</PackagePath>
       <Modified>2024-06-28T10:38:38.399</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormReservation.xbf">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormReservation.xbf">
       <PackagePath>ConflictManagementLibrary\View\FormReservation.xbf</PackagePath>
       <Modified>2024-06-28T10:38:38.400</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormRoutePlan.xbf">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\libraries\ConflictManagementLibrary\obj\Debug\net8.0-windows10.0.22621.0\View\FormRoutePlan.xbf">
       <PackagePath>ConflictManagementLibrary\View\FormRoutePlan.xbf</PackagePath>
       <Modified>2024-06-28T10:38:38.400</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
       <Modified>2024-06-24T08:30:53.056</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <Modified>2024-06-24T08:30:53.091</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <Modified>2024-06-24T08:30:53.126</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <Modified>2024-06-24T08:30:53.162</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <Modified>2024-06-24T08:30:53.194</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <Modified>2024-06-24T08:30:53.225</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\24June2024\AlstomWorkOfficial\AlstomWorkOfficial\cms\services\ConflictManagementService\ConflictManagementService\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\01July2024\Alstom\cms\services\ConflictManagementService\ConflictManagementService\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <Modified>2024-06-24T08:30:53.256</Modified>
     </AppxPackagedFile>

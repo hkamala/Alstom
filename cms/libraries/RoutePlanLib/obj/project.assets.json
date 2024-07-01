@@ -293,11 +293,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RoutePlanLib\\RoutePlanLib.csproj",
+      "projectUniqueName": "D:\\01July2024\\Alstom\\cms\\libraries\\RoutePlanLib\\RoutePlanLib.csproj",
       "projectName": "RoutePlanLib",
-      "projectPath": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RoutePlanLib\\RoutePlanLib.csproj",
+      "projectPath": "D:\\01July2024\\Alstom\\cms\\libraries\\RoutePlanLib\\RoutePlanLib.csproj",
       "packagesPath": "C:\\Users\\abdulhafeel\\.nuget\\packages\\",
-      "outputPath": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RoutePlanLib\\obj\\",
+      "outputPath": "D:\\01July2024\\Alstom\\cms\\libraries\\RoutePlanLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

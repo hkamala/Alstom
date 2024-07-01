@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TrainScheduleUITest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dbaef2f30d0d7268bfd45d2c4931870e568ac7a")]
 [assembly: System.Reflection.AssemblyProductAttribute("TrainScheduleUITest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TrainScheduleUITest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

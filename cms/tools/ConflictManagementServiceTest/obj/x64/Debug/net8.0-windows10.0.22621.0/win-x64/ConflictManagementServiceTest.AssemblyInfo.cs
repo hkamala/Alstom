@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConflictManagementServiceTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dbaef2f30d0d7268bfd45d2c4931870e568ac7a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConflictManagementServiceTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConflictManagementServiceTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

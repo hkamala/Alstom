@@ -7137,11 +7137,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RailgraphLib\\RailgraphLib.csproj",
+      "projectUniqueName": "D:\\01July2024\\Alstom\\cms\\libraries\\RailgraphLib\\RailgraphLib.csproj",
       "projectName": "RailgraphLib",
-      "projectPath": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RailgraphLib\\RailgraphLib.csproj",
+      "projectPath": "D:\\01July2024\\Alstom\\cms\\libraries\\RailgraphLib\\RailgraphLib.csproj",
       "packagesPath": "C:\\Users\\abdulhafeel\\.nuget\\packages\\",
-      "outputPath": "D:\\24June2024\\AlstomWorkOfficial\\AlstomWorkOfficial\\cms\\libraries\\RailgraphLib\\obj\\",
+      "outputPath": "D:\\01July2024\\Alstom\\cms\\libraries\\RailgraphLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
