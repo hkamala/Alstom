@@ -8,40 +8,92 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-            <ListView Name="lvPlan" BorderThickness="1" BorderBrush="Gray" Height="500" Width="1500" Margin="5">
-                <ScrollViewer Height="800" Width="1400" ZoomMode="Enabled"
-                         HorizontalAlignment="Left" VerticalAlignment="Top" 
-                         IsTabStop="True" IsVerticalScrollChainingEnabled="True"
-                         HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" 
-                         VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled"
-                         >
-                    <Grid HorizontalAlignment="Left">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ListViewItem Name="colName" Content="Route Name" Grid.Column="0" FontWeight="Bold" Margin="5" />
-                        <ListViewItem Name="colFrom" Content="From Platform" Grid.Column="1" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colTo" Content="To Platform" Grid.Column="2" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colTrigger" Content="Trigger Point" Grid.Column="3" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colPast" Content="On/Past Trigger Point" Grid.Column="4" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colSent" Content="Sent To ROS" Grid.Column="5" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colRos" Content="ROS Confirmed" Grid.Column="6" FontWeight="Bold" Margin="5"/>
-                        <ListViewItem Name="colSig" Content="Signal Cleared" Grid.Column="7" FontWeight="Bold" Margin="5"/>
-                    </Grid>
-                </ScrollViewer>
-            </ListView>
-        </StackPanel>
-    </StackPanel>
+    <Grid x:Name="root" Height="Auto" Width="Auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollView HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="10,10,10,5" Height="780" Width="1600" Background="LightGray" CornerRadius="5" VerticalAlignment="Top">
+                <Grid>
+                    <ListView Name="lvRoute" SelectionMode="Single" IsItemClickEnabled="True" CornerRadius="5" Margin="0 0 0 0" Height="Auto">
+                        <ListView.Header>
+                            <Grid Background="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="Wheat"  BorderThickness="1" Grid.Column="0">
+                                    <TextBlock  Name="colName" Text="Route Name"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="1">
+                                    <TextBlock Name="colFrom" Text="From Platform"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="2">
+                                    <TextBlock  Name="colTo" Text="To Platform"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="3">
+                                    <TextBlock Name="colTrigger" Text="Trigger Point"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1"  Grid.Column="4">
+                                    <TextBlock Name="colPast" Text="On/Past Trigger Point" FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1"  Grid.Column="5">
+                                    <TextBlock Name="colSent" Text="Sent To ROS" FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="6">
+                                    <TextBlock Name="colRos" Text="ROS Confirmed"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                                <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="7">
+                                    <TextBlock  Name="colSig" Text="Signal Cleared"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="-16 -20 -20 -20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="0">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding RouteName}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="1">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding FromPlatform}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="2">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding ToPlatform}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="3">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding TriggerPoint}"/>
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="4">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding PastTriggerPoint}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="5">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding SentToROS}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="6">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding ROSConfirmed}" />
+                                    </Border>
+                                    <Border BorderBrush="White" BorderThickness="1" Grid.Column="7">
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding SignalCleared}"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+        </ScrollView>
+    </Grid>
 </Window>
