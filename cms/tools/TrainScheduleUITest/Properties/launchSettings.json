@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TrainScheduleUITest (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TrainScheduleUITest (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

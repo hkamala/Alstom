@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ConflictManagementServiceTest (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ConflictManagementServiceTest (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

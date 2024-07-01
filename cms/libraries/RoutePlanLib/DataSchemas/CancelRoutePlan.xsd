@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="rcsMsg">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="hdr"/>
+				<xs:element ref="data"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="hdr">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="schema" type="xs:string"/>
+				<xs:element name="sender" type="xs:string"/>
+				<xs:element name="utc" type="xs:string"/>
+				<xs:element name="scnt" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CancelRoutePlan"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="CancelRoutePlan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Trains"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Trains">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Train" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Train">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GUID" type="xs:string"/>
+				<xs:element name="serid" type="xs:int"/>
+				<xs:element name="SerN" type="xs:string"/>
+				<xs:element name="TripID" type="xs:string"/>
+				<xs:element name="Origin" type="xs:string"/>
+				<xs:element name="Destination" type="xs:string"/>
+				<xs:element name="FirstPassengerStop" type="xs:string"/>
+				<xs:element name="LastPassengerStop" type="xs:string"/>
+				<xs:element name="TrackedGUID" type="xs:string"/>
+				<xs:element name="CTCID" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

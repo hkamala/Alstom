@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SkeletonService": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

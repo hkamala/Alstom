@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<rcs:Message 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rcs="http://www.transport.bombardier.com/2014/RcsCmm"
+	xmlns:rcswds="http://www.transport.bombardier.com/2014/RcsCmm/wds"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<hdr>
+		<source>{0}</source>
+		<messageId>rcs.e2k.ctc.{1}-{2}</messageId>
+		<correlationId>{3}</correlationId>
+		<content>rcswds:processStateReport</content>
+	</hdr>
+	<data>
+		<rcswds:processStateReport sourceId="{0}">
+			<tsn>{4}</tsn>
+			<state>{5}</state>
+		</rcswds:processStateReport>
+	</data>
+</rcs:Message>

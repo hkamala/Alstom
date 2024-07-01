@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CancelRoutePlanResponce"
+    targetNamespace="http://tempuri.org/RoutePlanResponce.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/RoutePlanResponce.xsd"
+    xmlns:mstns="http://tempuri.org/RoutePlanResponce.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="rcsMsg">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="hdr"/>
+				<xs:element ref="data"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="hdr">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="schema" type="xs:string"/>
+				<xs:element name="sender" type="xs:string"/>
+				<xs:element name="utc" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CancelTrainPlan"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="CancelTrainPlan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Trains">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Train" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="dummy" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Train">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CtcTrainId" type="xs:string"/>
+				<xs:element name="ServiceName" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

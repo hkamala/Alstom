@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="rcsMsg">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="hdr"/>
+				<xs:element ref="data"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="hdr">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="schema" type="xs:string"/>
+				<xs:element name="sender" type="xs:string"/>
+				<xs:element name="utc" type="xs:string"/>
+				<xs:element name="scnt" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RoutePlan"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RoutePlan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Trains"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Trains">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Train" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Train">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GUID" type="xs:string"/>
+				<xs:element name="serid" type="xs:int"/>
+				<xs:element name="SerN" type="xs:string"/>
+				<xs:element name="TripID" type="xs:int"/>
+				<xs:element name="Origin" type="xs:string"/>
+				<xs:element name="Destination" type="xs:string"/>
+				<xs:element name="FirstPassengerStop" type="xs:string"/>
+				<xs:element name="LastPassengerStop" type="xs:string"/>
+				<xs:element name="TrackedGUID" type="xs:string"/>
+				<xs:element name="CTCID" type="xs:string"/>
+				<xs:element ref="Items"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Path" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="From">
+		<xs:sequence>
+			<xs:element name="PA" type="xs:string"/>
+			<xs:element name="RA" type="xs:string"/>
+			<xs:element name="PD" type="xs:string"/>
+			<xs:element name="RD" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="ttobjID" type="xs:int"/>
+		<xs:attribute name="ename" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:element name="Path">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="From" type="From"/>
+				<xs:element name="To" type="From"/>
+				<xs:element ref="Platform"/>
+				<xs:element ref="MasterRoute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:string" use="required"/>
+			<xs:attribute name="TrID" type="xs:int"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Platform">
+		<xs:complexType>
+			<xs:attribute name="stop" type="xs:boolean"/>
+			<xs:attribute name="passengers" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="MasterRoute">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Actions"/>
+			</xs:sequence>
+			<xs:attribute name="ID" type="xs:int"/>
+			<xs:attribute name="Type" type="xs:string"/>
+			<xs:attribute name="routingType" type="xs:int"/>
+			<xs:attribute name="start" type="xs:int"/>
+			<xs:attribute name="end" type="xs:int"/>
+			<xs:attribute name="destination" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Actions">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="RCA" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SCA" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SCRA" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ITA" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="BaseAction">
+		<xs:sequence>
+			<xs:element ref="Command" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Obj">
+				<xs:complexType>
+					<xs:attribute name="tmsID" type="xs:int"/>
+					<xs:attribute name="ename" type="xs:string"/>
+					<xs:attribute name="secs" type="xs:int"/>
+					<xs:attribute name="par1" type="xs:int"/>
+					<xs:attribute name="par2" type="xs:int"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:int"/>
+		<xs:attribute name="SubType" type="xs:string"/>
+		<xs:attribute name="SeqNo" type="xs:int"/>
+		<xs:attribute name="TimingMode" type="xs:int"/>
+	</xs:complexType>	
+
+	<xs:element name="RCA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SCA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="SCRA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ITA">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="BaseAction"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Command">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Properties"/>
+			</xs:sequence>
+			<xs:attribute name="ttObjID" type="xs:int"/>
+			<xs:attribute name="cmd" type="xs:string"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Properties">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Property" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Property">
+		<xs:complexType>
+			<xs:attribute name="condition" type="xs:string"/>
+			<xs:attribute name="test" type="xs:string"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Obj">
+		<xs:complexType>
+			<xs:attribute name="tmsID" type="xs:int"/>
+			<xs:attribute name="ename" type="xs:string"/>
+			<xs:attribute name="secs" type="xs:int"/>
+			<xs:attribute name="par1" type="xs:int"/>
+			<xs:attribute name="par2" type="xs:int"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
