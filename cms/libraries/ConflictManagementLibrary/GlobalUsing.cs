@@ -1,1 +1,0 @@
-﻿global using static ConflictManagementLibrary.Helpers.GlobalDeclarations;
