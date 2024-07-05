@@ -147,7 +147,7 @@ namespace ConflictManagementLibrary.Management
                 MyLogger = ConflictManagementLibrary.Logging.AppLoggingStart.CreateLogger();
                 MyLogger?.LogInfo("Event Logging Initialized...");
                 var theApplicationVersion = MyAppVersion; //System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
-                MyLogger?.LogInfo("CMS Application Version <" + theApplicationVersion +">");
+                MyLogger?.LogInfo("CMS Application Version <" + theApplicationVersion + ">");
 
             }
             catch (Exception e)
@@ -163,7 +163,7 @@ namespace ConflictManagementLibrary.Management
         private void InitializeTrainScheduleManager()
         {
             MyLogger.LogInfo("Train Schedule Manager Initializing...");
-            MyTrainSchedulerManager = TrainSchedulerManager.CreateInstance(MyLogger,MyExchangeManager);
+            MyTrainSchedulerManager = TrainSchedulerManager.CreateInstance(MyLogger, MyExchangeManager);
         }
         private void InitializeRailwayNetworkManager()
         {

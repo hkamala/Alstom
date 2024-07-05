@@ -4,30 +4,25 @@ using ConflictManagementLibrary.Model.Trip;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics;
 using Microsoft.UI;
-using static ConflictManagementLibrary.Model.Trip.Trip;
+using Windows.UI;
 using ConflictManagementLibrary.Logging;
+using System.Diagnostics;
+using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Media;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
+using Microsoft.UI.Text;
+using System.DirectoryServices;
+using Microsoft.UI.Xaml.Input;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -36,7 +31,7 @@ namespace ConflictManagementLibrary.View;
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class FormConflictList : Window
+public sealed partial class FormConflictList : Window, INotifyPropertyChanged
 {
     /// <summary>
     /// Represents a Microsoft.UI.AppWindow object.
@@ -50,6 +45,28 @@ public sealed partial class FormConflictList : Window
     public ObservableCollection<Trip> MyTrips = new ObservableCollection<Trip>();
     public bool blockThread = false;
     #endregion
+    private bool _conflictResolutionEnabled;
+    public event PropertyChangedEventHandler PropertyChanged;
+    private ListSortDirection _sortDirection = ListSortDirection.Ascending;
+    private string _lastSortedColumn = string.Empty;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    public bool ConflictResolutionEnabled
+    {
+        get => _conflictResolutionEnabled;
+        set
+        {
+            _conflictResolutionEnabled = value;
+            OnPropertyChanged(); // Implement INotifyPropertyChanged if needed
+        }
+    }
+    public string ConflictResolutionStatusText =>
+    ConflictResolutionEnabled ? "Automatic Conflict Resolution Status Is Enabled" : "Automatic Conflict Resolution Status Is Disabled";
+
+    public SolidColorBrush ConflictResolutionStatusColor =>
+        new SolidColorBrush(ConflictResolutionEnabled ? Colors.Green : Colors.Red);
 
     #region Delegates
     public delegate void ConflictUpdateDelegate(Trip? theTrip);
@@ -81,6 +98,7 @@ public sealed partial class FormConflictList : Window
         _presenter.IsMaximizable = false;
         LoadData();
         Thread.CurrentThread.CurrentCulture = new CultureInfo(CurrentUiCulture);
+        InitializeForm();
     }
     #region GetAppWindowAndPresenter
     /// <summary>
@@ -92,7 +110,7 @@ public sealed partial class FormConflictList : Window
         var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this); // API to get the window object from UIElement (not a real API)
 
         // Get the WindowId from the window handle
-        WindowId myWndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+        Microsoft.UI.WindowId myWndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
 
         // Retrieve the AppWindow associated with the WindowId
         _apw = AppWindow.GetFromWindowId(myWndId);
@@ -100,11 +118,9 @@ public sealed partial class FormConflictList : Window
         // Get the OverlappedPresenter object from the AppWindow
         _presenter = _apw.Presenter as OverlappedPresenter;
     }
-
     #endregion
     private void InitializeForm()
     {
-
         MyTrainSchedulerManager?.LinkDelegate(DoProcessTrip!, DoProcessStatus!, DoProcessEvent!, DoProcessForecast!);
         MyTrainSchedulerManager?.ProduceMessage1000();
 
@@ -114,17 +130,27 @@ public sealed partial class FormConflictList : Window
     {
         try
         {
-            //if (InvokeRequired)
-            //{
-            //    this.Invoke(new MethodInvoker(delegate { ProcessEvent(theMessage); }));
-            //}
-
+            // Check if we are on the UI thread
+            if (!DispatcherQueue.HasThreadAccess)
+            {
+                // If not, invoke on the UI thread
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    ProcessEvent(theMessage);
+                });
+            }
+            else
+            {
+                // If already on the UI thread, just call the method
+                ProcessEvent(theMessage);
+            }
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
     }
+
     private void ProcessEvent(ConflictManagementMessages.CmsEventMessage theMessage)
     {
         try
@@ -132,44 +158,50 @@ public sealed partial class FormConflictList : Window
             var message = theMessage.MyEventMessage?.MessageOfEvent;
             var timeStamp = theMessage.MyEventMessage?.EventTimeStamp;
             var eventMessage = timeStamp + "\t" + message + '\n';
-            //txtEvent.SelectionColor = ColorForLine(theMessage.MyEventMessage?.EventLevel);
-            //txtEvent.AppendText(eventMessage);
-            //txtEvent.ScrollToCaret();
+
+            var paragraph = new Paragraph();
+            var run = new Run
+            {
+                Text = eventMessage,
+                Foreground = new SolidColorBrush(ColorForLine(theMessage.MyEventMessage?.EventLevel))
+            };
+
+            paragraph.Inlines.Add(run);
+            txtEvent.Text = Convert.ToString(paragraph);
+
             MyLogger?.LogInfo(eventMessage);
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
-
     }
     private Color ColorForLine(string? line)
     {
         if (line != null)
         {
-
             if (line.Contains("FATAL"))
             {
-                return Color.Red;
+                return Colors.Red;
             }
             else if (line.Contains("WARN"))
             {
-                return Color.DarkOrange;
+                return Colors.DarkOrange;
             }
             else if (line.Contains("DEBUG"))
             {
-                return Color.Blue;
+                return Colors.Blue;
             }
             else if (line.Contains("ERROR"))
             {
-                return Color.Coral;
+                return Colors.Coral;
             }
             else
             {
-                return Color.Black;
+                return Colors.Black;
             }
         }
-        return Color.Black;
+        return Colors.Black;
     }
 
     #endregion
@@ -178,50 +210,67 @@ public sealed partial class FormConflictList : Window
     {
         try
         {
-            //if (InvokeRequired)
-            //{
-            //    this.Invoke(new MethodInvoker(delegate { ProcessStatus(theStatus); }));
-            //}
+            // Check if we are on the UI thread
+            if (!DispatcherQueue.HasThreadAccess)
+            {
+                // If not, invoke on the UI thread
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    ProcessStatus(theStatus);
+                });
+            }
+            else
+            {
+                // If already on the UI thread, just call the method
+                ProcessStatus(theStatus);
+            }
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
     }
+
     private void ProcessStatus(ConflictManagementMessages.ConflictResolutionStatus theStatus)
     {
         try
         {
-            if (theStatus.ConflictResolutionEnabled)
-            {
-                //tssConflictResolutionStatus.ForeColor = Color.Green;
-                tssConflictResolutionStatus.Text = @"Automatic Conflict Resolution Status Is Enabled";
-            }
-            else
-            {
-                //tssConflictResolutionStatus.ForeColor = Color.Red;
-                tssConflictResolutionStatus.Text = @"Automatic Conflict Resolution Status Is Disabled";
-            }
+            ConflictResolutionEnabled = theStatus.ConflictResolutionEnabled;
+
+            // Optionally log the status change
+            MyLogger?.LogInfo($"Automatic Conflict Resolution Status Is {(ConflictResolutionEnabled ? "Enabled" : "Disabled")}");
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
     }
+
     private void DoProcessTrip(Trip theTrip, string theCommand)
     {
         try
         {
-            //if (InvokeRequired)
-            //{
-            //    this.Invoke(new MethodInvoker(delegate { ProcessTrip(theTrip, theCommand); }));
-            //}
+            // Check if we are on the UI thread
+            if (!DispatcherQueue.HasThreadAccess)
+            {
+                // If not, invoke on the UI thread
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    ProcessTrip(theTrip, theCommand);
+                });
+            }
+            else
+            {
+                // If already on the UI thread, just call the method
+                ProcessTrip(theTrip, theCommand);
+            }
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
     }
+
     private void ProcessTrip(Trip theTrip, string theCommand)
     {
         var tripExist = DoesTripExist(theTrip);
@@ -314,21 +363,32 @@ public sealed partial class FormConflictList : Window
     {
         try
         {
-            //if (InvokeRequired)
-            //{
-            //    this.Invoke(new MethodInvoker(delegate { ProcessForecast(theForecast); }));
-            //}
+            // Check if we are on the UI thread
+            if (!DispatcherQueue.HasThreadAccess)
+            {
+                // If not, invoke on the UI thread
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    ProcessForecast(theForecast);
+                });
+            }
+            else
+            {
+                // If already on the UI thread, just call the method
+                ProcessForecast(theForecast);
+            }
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
     }
+
     private void ProcessForecast(Forecast theForecast)
     {
         try
         {
-            //TODO Swetha....you can do your updates from here
+
         }
         catch (Exception e)
         {
@@ -356,55 +416,44 @@ public sealed partial class FormConflictList : Window
     }
     private void AddTrip(Trip theTrip, bool doRefresh = true)
     {
-        while (blockThread)
-        {
-            Thread.Sleep(5);
-        }
         try
         {
-            blockThread = true;
             var length = 0;
-            //var trainType = "Default";
             if (theTrip.MyTrainPosition != null && theTrip.MyTrainPosition.Train != null)
             {
                 if (theTrip.MyTrainPosition.Train.DefaultLength > 0)
                     length = theTrip.MyTrainPosition.Train.DefaultLength / 1000;
-                //trainType = theTrip.MyTrainPosition.Train.TrainType;
             }
-            //var i = 0;
-            //var shaded = Color.FromArgb(240, 240, 240);
-            //var lvItem = new ListViewItem(theTrip.ScheduledPlanName);
-            //lvItem.SubItems.Add(theTrip.TripCode);
-            //lvItem.SubItems.Add(theTrip.Direction);
-            //lvItem.SubItems.Add(theTrip.StartTime);
-            //lvItem.SubItems.Add(theTrip.TrainTypeString);
-            //lvItem.SubItems.Add(theTrip.SubType.ToString());
-            //lvItem.SubItems.Add(length.ToString());
-            //lvItem.SubItems.Add(theTrip.Postfix.ToString());
-            //lvItem.SubItems.Add(theTrip.StartPosition);
-            //lvItem.SubItems.Add(theTrip.EndPosition);
-            //lvItem.SubItems.Add(theTrip.MyConflicts.Count.ToString());
-            //if (theTrip.MyConflicts.Count > 0) lvItem.ForeColor = Color.Red;
-            //if (theTrip.IsAllocated) lvItem.Font = new Font(lvTrips.Font, FontStyle.Bold);
-            //if (i++ % 2 == 1)
-            //{
-            //    lvItem.BackColor = shaded;
-            //    lvItem.UseItemStyleForSubItems = true;
-            //}
-            //lvItem.Tag = theTrip;
-            //lvTrips.Items.Add(lvItem);
-            //lvItem.ToolTipText = GetToolTip(theTrip);
-            //if (doRefresh)
-            //{
-            //    lvTrips.Refresh();
-            //    this.Text = myName + @"  -  Trips (" + lvTrips.Items.Count + @")";
-            //}
+
+            // Create ListViewItem
+            var lvItem = new ListViewItem();
+            lvItem.Content = theTrip;
+
+            // Customize appearance based on conditions
+            if (theTrip.MyConflicts.Count > 0)
+            {
+                lvItem.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            if (theTrip.IsAllocated)
+            {
+                // Use FontWeights from Windows.UI.Text
+                lvItem.FontWeight = FontWeights.Bold;
+            }
+
+            // Add ListViewItem to ListView
+            lvTrips.Items.Add(lvItem);
+
+            // Optionally refresh ListView and update title
+            if (doRefresh)
+            {
+                lvTrips.UpdateLayout();
+                this.Title = $"{this.Title} - Trips ({lvTrips.Items.Count})";
+            }
         }
         catch (Exception e)
         {
             MyLogger?.LogException(e.ToString());
         }
-        blockThread = false;
     }
     private static string GetToolTip(Trip theTrip)
     {
@@ -468,16 +517,16 @@ public sealed partial class FormConflictList : Window
     {
         try
         {
-            //if (mnuAutoRouting.Text == @"Disable Automatic Conflict Resolution")
-            //{
-            //    MyTrainSchedulerManager!.ProduceMessage1004(true);
-            //    mnuAutoRouting.Text = @"Enable Automatic Conflict Resolution";
-            //}
-            //else
-            //{
-            //    MyTrainSchedulerManager!.ProduceMessage1004(false);
-            //    mnuAutoRouting.Text = @"Disable Automatic Conflict Resolution";
-            //}
+            if (mnuAutoRouting.Text == @"Disable Automatic Conflict Resolution")
+            {
+                MyTrainSchedulerManager!.ProduceMessage1004(true);
+                mnuAutoRouting.Text = @"Enable Automatic Conflict Resolution";
+            }
+            else
+            {
+                MyTrainSchedulerManager!.ProduceMessage1004(false);
+                mnuAutoRouting.Text = @"Disable Automatic Conflict Resolution";
+            }
         }
         catch (Exception ex)
         {
@@ -489,22 +538,171 @@ public sealed partial class FormConflictList : Window
         var trips = TripDataGenerator.GenerateTrips(MyLogger);
         lvTrips.ItemsSource = trips;
     }
-}
+    private Window m_window;
+    private void lvTrips_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        try
+        {
+            var trip = e.ClickedItem as Trip;
+            if (trip == null || trip.MyConflicts.Count <= 0) return;
 
-//public class MockTrip
-//{
-//    public string Control { get; set; }
-//    public string Code { get; set; }
-//    public string L_R { get; set; }
-//    public string Time { get; set; }
-//    public string TrainType { get; set; }
-//    public string SubType { get; set; }
-//    public int Length { get; set; }
-//    public string PostFix { get; set; }
-//    public string StartLocation { get; set; }
-//    public string EndLocation { get; set; }
-//    public int Conflicts { get; set; }
-//}
+            var form = new FormConflictDetails();
+            form.AssociateTrip(trip);
+
+            // Show the form (assuming it's a WinUI 3 window)
+            form.Activate();
+        }
+        catch (Exception ex)
+        {
+            MyLogger?.LogException(ex.ToString());
+        }
+        //try
+        //{
+        //    var trip = FindTrip(Convert.ToString(((Trip)e.ClickedItem).TripId), Convert.ToString(((Trip)e.ClickedItem).SerUid));
+
+        //    if (trip == null || trip.MyConflicts.Count <= 0) return;
+        //    var form = new FormConflictDetails();
+        //    form.AssociateTrip(trip);
+        //    m_window = form;
+        //    m_window.Activate();
+        //}
+        //catch (Exception ex)
+        //{
+        //    MyLogger?.LogException(ex.ToString());
+        //}
+    }
+    private void ColumnHeader_Click(object sender, RoutedEventArgs e)
+    {
+        var header = sender as Button;
+        if (header != null)
+        {
+            var columnTag = header.Content.ToString();
+
+            // Determine the sorting direction
+            if (_lastSortedColumn == columnTag)
+            {
+                _sortDirection = _sortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            }
+            else
+            {
+                _sortDirection = ListSortDirection.Ascending;
+                _lastSortedColumn = columnTag;
+            }
+
+            SortTrips(columnTag, _sortDirection);
+        }
+    }
+    private void SortTrips(string column, ListSortDirection direction)
+    {
+        var sortedTrips = new ObservableCollection<Trip>(lvTrips.Items.Cast<Trip>().OrderBy(trip => trip.GetType().GetProperty(column).GetValue(trip, null)));
+
+        if (direction == ListSortDirection.Descending)
+        {
+            sortedTrips = new ObservableCollection<Trip>(sortedTrips.Reverse());
+        }
+
+        lvTrips.ItemsSource = sortedTrips;
+    }
+    private void lvTrips_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+    private void lvTrips_RightTapped(object sender, RightTappedRoutedEventArgs e)
+    {
+        var clickedItem = (e.OriginalSource as FrameworkElement)?.DataContext as Trip;
+        if (clickedItem != null)
+        {
+            lvTrips.SelectedItem = clickedItem;
+            var frameworkElement = sender as FrameworkElement;
+            var flyout = frameworkElement?.Resources["RightClickMenu"] as MenuFlyout;
+            flyout?.ShowAt(frameworkElement, e.GetPosition(frameworkElement));
+        }
+    }
+    private void ShowReservations_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var lvItem = (Trip)lvTrips.SelectedItem;
+            if (lvItem != null)
+            {
+                var trip = FindTrip(Convert.ToString(lvItem.TripId), Convert.ToString(lvItem.StartTime));
+                if (trip == null) return;
+
+                var reservation = new FormReservation();
+                //reservation.AssociateTrip(trip);
+                reservation.Activate();
+
+                lvTrips.SelectedItem = null; // Deselect the item
+            }
+        }
+        catch (Exception ex)
+        {
+            // Assuming MyLogger is a method to log exceptions
+            MyLogger?.LogException(ex.ToString());
+        }
+    }
+
+    private void ShowRoutePlan_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var lvItem = (Trip)lvTrips.SelectedItem;
+            if (lvItem != null)
+            {
+                var trip = FindTrip(Convert.ToString(lvItem.TripId), Convert.ToString(lvItem.StartTime));
+                if (trip == null) return;
+
+                var routePlan = new FormRoutePlan();
+                //routePlan.AssociateTrip(trip);
+                routePlan.Activate();
+
+                lvTrips.SelectedItem = null; // Deselect the item
+            }
+        }
+        catch (Exception ex)
+        {
+            // Assuming MyLogger is a method to log exceptions
+            MyLogger?.LogException(ex.ToString());
+        }
+    }
+
+    private void DeleteTrip_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var lvItem = (Trip)lvTrips.SelectedItem;
+            if (lvItem != null)
+            {
+                var trip = FindTrip(Convert.ToString(lvItem.TripId), Convert.ToString(lvItem.StartTime));
+                MyTrainSchedulerManager!.ProduceMessage1003(trip!);
+            }
+        }
+        catch (Exception ex)
+        {
+            MyLogger?.LogException(ex.ToString());
+        }
+    }
+
+    private void SaveTrip_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var lvItem = (Trip)lvTrips.SelectedItem;
+            if (lvItem != null)
+            {
+                var trip = FindTrip(Convert.ToString(lvItem.TripId), Convert.ToString(lvItem.StartTime));
+                var tripCode = trip?.TripCode;
+                var tripUid = trip?.TripId.ToString();
+                MyTrainSchedulerManager!.ProduceMessage1006(tripCode, tripUid);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            MyLogger?.LogException(ex.ToString());
+        }
+    }
+}
 
 public class TripDataGenerator
 {
