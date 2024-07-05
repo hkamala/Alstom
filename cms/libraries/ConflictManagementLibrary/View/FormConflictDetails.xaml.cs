@@ -1,27 +1,8 @@
-using ConflictManagementLibrary.Helpers;
-using ConflictManagementLibrary.Logging;
-using ConflictManagementLibrary.Model.Conflict;
-using ConflictManagementLibrary.Model.Reservation;
-using ConflictManagementLibrary.Model.Trip;
-using ConflictManagementLibrary.Test;
-using Microsoft.UI;
-using Microsoft.UI.Text;
+using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using static ConflictManagementLibrary.View.DemoData;
-
-
-//using System.Windows.Forms;
-using Exception = System.Exception;
-//using ListViewItem = System.Windows.Forms.ListViewItem;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Windows.AI.MachineLearning;
 
 namespace ConflictManagementLibrary.View
 {
@@ -31,7 +12,7 @@ namespace ConflictManagementLibrary.View
     public sealed partial class FormConflictDetails : Window
     {
         public Trip? MyTrip;
-        private Conflict? currentConflict;
+        private Conflict? currentConflict = DemoData.DemoSingleTripData.GenerateTrips(MyLogger).MyConflicts.FirstOrDefault();
         public FormConflictDetails()
         {
             this.InitializeComponent();
@@ -40,26 +21,6 @@ namespace ConflictManagementLibrary.View
             DisplayCurrentConflictsInTreeView();
         }
 
-
-        private TextBlock CreateTextBlock(string text, double fontSize)
-        {
-            return new TextBlock
-            {
-                Text = text,
-                FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Calibri"),
-                FontSize = fontSize,
-                FontWeight = FontWeights.Bold,
-                FontStyle = Windows.UI.Text.FontStyle.Normal,
-            };
-        }
-
-        private TreeViewNode CreateTreeViewNode(string text, double fontSize)
-        {
-            return new TreeViewNode
-            {
-                Content = CreateTextBlock(text, fontSize)
-            };
-        }
 
 
         private void FormConflictDetails_Load(object sender, EventArgs e)
@@ -71,7 +32,7 @@ namespace ConflictManagementLibrary.View
         private void InitializeForm()
         {
             //if (MyTrip != null) this.Title += @" - Trip " + MyTrip.TripCode;
-            if (MyTrip != null) this.Title += @" - Trip " + DemoSingleTripData.GenerateTrips(MyLogger).TripCode;
+            if (DemoSingleTripData.GenerateTrips(MyLogger) != null) this.Title += @" - Trip " + DemoSingleTripData.GenerateTrips(MyLogger).TripCode;
             foreach (var child in gbRouteDetails.Children)
             {
                 if (child is TextBlock textBlock)
@@ -100,55 +61,19 @@ namespace ConflictManagementLibrary.View
                     foreach (var tl in myTrip.TimedLocations)
                     {
                         var shaded = Microsoft.UI.Colors.DarkGray; // Windows.UI.Color.FromArgb(240, 240, 240);
-                        var lvItem = new ListViewItem();
-                        //lvItem.Content = tl.Description;
-
-                        // Create a StackPanel to hold the sub-items
-                        StackPanel stackPanel = new StackPanel();
-                        stackPanel.Orientation = Orientation.Horizontal;
-
-                        //lvItem.SubItems.Add(tl.ArrivalTimeAdjusted.ToString("dd/MM/yy HH:mm"));
-                        //lvItem.SubItems.Add(tl.DepartureTimeAdjusted.ToString("dd/MM/yy HH:mm"));
-                        //if (i++ % 2 == 1)
-                        //{
-                        //    lvItem.Background = new SolidColorBrush(shaded);
-                        //}
-                        //lvPlan.Items.Add(lvItem);
-                        //lvItem.ToolTipText = GetToolTip(tl);
-
-
-                        // Add description
-                        TextBlock descriptionTextBlock = new TextBlock();
-                        descriptionTextBlock.Text = tl.Description;
-                        stackPanel.Children.Add(descriptionTextBlock);
-
-                        // Add arrival time
-                        TextBlock arrivalTimeTextBlock = new TextBlock();
-                        arrivalTimeTextBlock.Text = tl.ArrivalTimeAdjusted.ToString("dd/MM/yy HH:mm");
-                        stackPanel.Children.Add(arrivalTimeTextBlock);
-
-                        // Add departure time
-                        TextBlock departureTimeTextBlock = new TextBlock();
-                        departureTimeTextBlock.Text = tl.DepartureTimeAdjusted.ToString("dd/MM/yy HH:mm");
-                        stackPanel.Children.Add(departureTimeTextBlock);
-
-                        // Set the StackPanel as the content of the ListViewItem
-                        lvItem.Content = stackPanel;
+                        //item1.Style = (Windows.UI.Xaml.Style)Resources["CustomListViewItemStyle"];
+                        var item1 = new ListViewItem();
+                        item1.Content = CreateItemContent(tl.Description, tl.ArrivalTimeActual, tl.DepartureTimeAdjusted);
+                        lvPlan.Items.Add(item1);
 
                         if (i++ % 2 == 1)
                         {
-                            lvItem.Background = new SolidColorBrush(shaded);
+                            item1.Background = new SolidColorBrush(shaded);
+                            //item1.PointerOverBackground = solidColorBrush;
                         }
-
-                        // Add the ListViewItem to the ListView
-                        lvPlan.Items.Add(lvItem);
-
-                        // Set ToolTip
                         ToolTip toolTip = new ToolTip();
                         toolTip.Content = GetToolTip(tl);
-                        ToolTipService.SetToolTip(lvItem, toolTip);
-
-
+                        ToolTipService.SetToolTip(lvPlan, toolTip);
                         // No need to call lvPlan.Refresh() in WinUI 3
                     }
                 }
@@ -158,6 +83,71 @@ namespace ConflictManagementLibrary.View
                 GlobalDeclarations.MyLogger?.LogException(e.ToString());
             }
         }
+
+        private Grid CreateItemContent(string platform, DateTime arrival, DateTime departure)
+        {
+            var grid = new Grid
+            {
+                Margin = new Thickness(-12, -6, -15, -5),
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = new GridLength(160) },
+                    new ColumnDefinition { Width = new GridLength(160) },
+                    new ColumnDefinition { Width = new GridLength(158) }
+                }
+            };
+
+            var border1 = new Border
+            {
+                Padding = new Thickness(4),
+                BorderBrush = new SolidColorBrush(Microsoft.UI.Colors.White),
+                BorderThickness = new Thickness(1, 1, 0, 1),
+                Child = new TextBlock
+                {
+                    TextAlignment = TextAlignment.Left,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 12,
+                    Text = platform
+                }
+            };
+            Grid.SetColumn(border1, 0);
+            grid.Children.Add(border1);
+
+            var border2 = new Border
+            {
+                Padding = new Thickness(4),
+                BorderBrush = new SolidColorBrush(Microsoft.UI.Colors.White), 
+                BorderThickness = new Thickness(1, 1, 0, 1),
+                Child = new TextBlock
+                {
+                    TextAlignment = TextAlignment.Left,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 12,
+                    Text = arrival.ToString()
+                }
+            };
+            Grid.SetColumn(border2, 1);
+            grid.Children.Add(border2);
+
+            var border3 = new Border
+            {
+                Padding = new Thickness(4),
+                BorderBrush = new SolidColorBrush(Microsoft.UI.Colors.White),
+                BorderThickness = new Thickness(1),
+                Child = new TextBlock
+                {
+                    TextAlignment = TextAlignment.Left,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 12,
+                    Text = departure.ToString()
+                }
+            };
+            Grid.SetColumn(border3, 2);
+            grid.Children.Add(border3);
+
+            return grid;
+        }
+
 
         private static string GetToolTip(TimedLocation timedLocation)
         {
@@ -183,6 +173,7 @@ namespace ConflictManagementLibrary.View
             try
             {
                 TreeViewNode currentConflict = CreateTreeViewNode("Current Conflict", 20);
+                currentConflict.IsExpanded = true;
                 tvConflictsCurrent.RootNodes.Add(currentConflict);
                 //foreach (var conflict in MyTrip.MyConflicts)
                 // Mock Data
@@ -210,13 +201,34 @@ namespace ConflictManagementLibrary.View
                         locationDetails.Children.Add(resolution);
                     }
                 }
-                tvConflictsCurrent.SelectedNodes[0].IsExpanded = true;
+                tvConflictsCurrent.RootNodes.FirstOrDefault().Children.FirstOrDefault().IsExpanded = true;
             }
             catch (Exception e)
             {
                 GlobalDeclarations.MyLogger?.LogException(e.ToString());
             }
         }
+
+        private TextBlock CreateTextBlock(string text, double fontSize)
+        {
+            return new TextBlock
+            {
+                Text = text,
+                FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Calibri"),
+                FontSize = fontSize,
+                FontWeight = FontWeights.Bold,
+                FontStyle = Windows.UI.Text.FontStyle.Normal,
+            };
+        }
+
+        private TreeViewNode CreateTreeViewNode(string text, double fontSize)
+        {
+            return new TreeViewNode
+            {
+                Content = CreateTextBlock(text, fontSize)
+            };
+        }
+
 
         private void tvConflictsCurrent_SelectionChanged(Microsoft.UI.Xaml.Controls.TreeView sender, TreeViewSelectionChangedEventArgs args)
         {
@@ -236,10 +248,9 @@ namespace ConflictManagementLibrary.View
         {
             try
             {
-                var conflict = GetConflict(theNode.Content.ToString());
+                var conflict = GetConflict(((Microsoft.UI.Xaml.Controls.TextBlock)theNode.Content).Text);
                 if (conflict != null)
                 {
-                    UpdateTextBoxColor(conflict);
                     txtSubtype.Text = conflict.MySubtypeOfConflict.MyDescription.Trim();
                     txtConflictLocation.Text = conflict.MyLocation;
                     txtConflictTime.Text = conflict.MyDateTime.ToString("dd-MM HH:mm:ss");
@@ -248,17 +259,18 @@ namespace ConflictManagementLibrary.View
                     txtConflictDescription.Text = conflict.MyEntity.MyDescription;
                     txtConflictResolution.Text = conflict.MyResolution.MyTypeOfResolution.ToString();
                     currentConflict = conflict;
+                    UpdateTextBoxColor(conflict);
                     if (conflict.MyReservation != null && conflict.MyReservation.MyTimedLocation != null)
                         UpdateTripPlanList(conflict.MyReservation.MyTimedLocation.Description);
                     if (!conflict.IsResolvable)
                     {
-                        btnAccept.Visibility = Visibility.Collapsed;
-                        btnReject.Visibility = Visibility.Collapsed;
+                        btnAccept.IsEnabled = false;
+                        btnReject.IsEnabled = false;
                     }
                     else
                     {
-                        btnAccept.Visibility = Visibility.Visible;
-                        btnReject.Visibility = Visibility.Visible;
+                        btnAccept.IsEnabled = true;
+                        btnReject.IsEnabled = true;
                     }
                 }
             }
@@ -393,11 +405,11 @@ namespace ConflictManagementLibrary.View
         private void UpdateTextBoxColor(Conflict theConflict)
         {
             SolidColorBrush theBrush = GetNodeColor(theConflict);
-            foreach (var control in gbConflictSummary.Children)
+            foreach (var control in gbConflictSummaryGrid.Children)
             {
-                if (control is TextBlock)
+                if (control is TextBox)
                 {
-                    var tb = (TextBlock)control;
+                    var tb = (TextBox)control;
                     tb.Foreground = theBrush;
                 }
             }
@@ -408,7 +420,8 @@ namespace ConflictManagementLibrary.View
             try
             {
                 //tvConflictsCurrent.Nodes[0].Nodes.Clear();
-                tvConflictsCurrent.SelectedNodes.Clear();
+
+                tvConflictsCurrent.RootNodes.Clear();
                 ClearConflictDetails();
                 DisplayCurrentConflictsInTreeView();
             }
@@ -455,7 +468,7 @@ namespace ConflictManagementLibrary.View
                     currentConflict.IsAccepted = true;
                     currentConflict.IsRejected = false;
                     UpdateConflictView();
-                    GlobalDeclarations.MyTrainSchedulerManager!.ProduceMessage1001(currentConflict);
+                   // GlobalDeclarations.MyTrainSchedulerManager!.ProduceMessage1001(currentConflict);
                     //this.Close();
                 }
             }
@@ -486,16 +499,6 @@ namespace ConflictManagementLibrary.View
         }
     }
 
-    //public class DemoConflict
-    //{
-    //    public string MyLocationDetail { set; get; }
-    //    public string MyTypeOfConflict { set; get; }
-    //    public string MySubtypeOfConflictMyDescription { set; get; }
-    //    public string MyLocation { set; get; }
-    //    public string MyEntityMyDescription { set; get; }
-    //    public string MyResolutionMyTypeOfResolution { set; get; }
-    //}
-
 
     public class DemoData
     {
@@ -503,72 +506,108 @@ namespace ConflictManagementLibrary.View
         {
             return new List<Trip>
             {
-            new Trip(logger)
-            {
-                CtcUid = "CTC123",
-                SerUid = 1,
-                ScheduledPlanId = "Plan123",
-                Name = "Trip A",
-                TripCode = "TA123",
-                TripId = 1001,
-                SysUid = "Sys123",
-                ScheduledPlanName = "Plan A",
-                Number = 1,
-                StartTime = "08:00",
-                StartPosition = "StationA",
-                EndPosition = "StationB",
-                Direction = "North",
-                TypeOfTrain = Trip.TrainType.Passenger,
-                SubType = Trip.TrainSubType.Passenger,
-                TrainTypeString = "Passenger",
-                TrainPriority = 1,
-                Length = 200,
-                Postfix = Trip.PostFixType.None,
-                LocationCurrent = new TrainLocation { },
-                LocationNext = new TrainLocation {  },
-                TimedLocations = new List<TimedLocation>
+                new Trip(logger)
                 {
-                    new TimedLocation
+                    CtcUid = "CTC123",
+                    SerUid = 1,
+                    ScheduledPlanId = "Plan123",
+                    Name = "Trip A",
+                    TripCode = "TA123",
+                    TripId = 1001,
+                    SysUid = "Sys123",
+                    ScheduledPlanName = "Plan A",
+                    Number = 1,
+                    StartTime = "08:00",
+                    StartPosition = "StationA",
+                    EndPosition = "StationB",
+                    Direction = "North",
+                    TypeOfTrain = Trip.TrainType.Passenger,
+                    SubType = Trip.TrainSubType.Passenger,
+                    TrainTypeString = "Passenger",
+                    TrainPriority = 1,
+                    Length = 200,
+                    Postfix = Trip.PostFixType.None,
+                    LocationCurrent = new TrainLocation { },
+                    LocationNext = new TrainLocation { },
+                    TimedLocations = new List<TimedLocation>
                     {
-                        Description = "PV01_DAR",
-                        ArrivalTimeAdjusted = DateTime.Now,
-                        DepartureTimeAdjusted = DateTime.Now,
-                        MyMovementPlan = new Model.Movement.MovementPlan()
+                        new TimedLocation
                         {
-                            Description = "mymovementplanDesc1",
-                            MyRouteActions = new List<Model.Movement.RouteAction>
+                            Description = "PV01_DAR",
+                            ArrivalTimeAdjusted = DateTime.Now,
+                            DepartureTimeAdjusted = DateTime.Now,
+                            MyMovementPlan = new Model.Movement.MovementPlan()
                             {
-                                new Model.Movement.RouteAction()
+                                Description = "mymovementplanDesc1",
+                                MyRouteActions = new List<Model.Movement.RouteAction>
                                 {
-                                    RouteName = "RouteName1",
-                                    ActionLocation = "ActionLocation1"
-                                }
+                                    new Model.Movement.RouteAction()
+                                    {
+                                        RouteName = "RouteName1",
+                                        ActionLocation = "ActionLocation1"
+                                    }
+                                },
                             },
                         },
+                        new TimedLocation
+                        {
+                            Description = "PV02_DAR",
+                            ArrivalTimeAdjusted = DateTime.Now,
+                            DepartureTimeAdjusted = DateTime.Now,
+                            MyMovementPlan = new Model.Movement.MovementPlan()
+                            {
+                                Description = "mymovementplanDesc2",
+                                MyRouteActions = new List<Model.Movement.RouteAction>
+                                {
+                                    new Model.Movement.RouteAction()
+                                    {
+                                        RouteName = "RouteName2",
+                                        ActionLocation = "ActionLocation2"
+                                    }
+                                },
+                            },
+                        },
+                        new TimedLocation
+                        {
+                            Description = "PV03_DAR",
+                            ArrivalTimeAdjusted = DateTime.Now,
+                            DepartureTimeAdjusted = DateTime.Now,
+                            MyMovementPlan = new Model.Movement.MovementPlan()
+                            {
+                                Description = "mymovementplanDesc3",
+                                MyRouteActions = new List<Model.Movement.RouteAction>
+                                {
+                                    new Model.Movement.RouteAction()
+                                    {
+                                        RouteName = "RouteName3",
+                                        ActionLocation = "ActionLocation3"
+                                    }
+                                },
+                            },
+                        },
+                        new TimedLocation
+                        {
+                            Description = "PV04_DAR",
+                            ArrivalTimeAdjusted = DateTime.Now,
+                            DepartureTimeAdjusted = DateTime.Now,
+                            MyMovementPlan = new Model.Movement.MovementPlan()
+                            {
+                                Description = "mymovementplanDesc4",
+                                MyRouteActions = new List<Model.Movement.RouteAction>
+                                {
+                                    new Model.Movement.RouteAction()
+                                    {
+                                        RouteName = "RouteName4",
+                                        ActionLocation = "ActionLocation4"
+                                    }
+                                },
+                            },
+                        }
                     },
-                    new TimedLocation
+                    MyConflicts = new List<Conflict>
                     {
-                        Description = "PV02_DAR",
-                        ArrivalTimeAdjusted = DateTime.Now,
-                        DepartureTimeAdjusted = DateTime.Now,
-                        MyMovementPlan = new Model.Movement.MovementPlan()
+                        new Conflict
                         {
-                            Description = "mymovementplanDesc2",
-                            MyRouteActions = new List<Model.Movement.RouteAction>
-                            {
-                                new Model.Movement.RouteAction()
-                                {
-                                    RouteName = "RouteName2",
-                                    ActionLocation = "ActionLocation2"
-                                }
-                            },
-                        },
-                    }
-                },
-                MyConflicts = new List<Conflict>
-                {
-                    new Conflict
-                    {
                             MyLocationDetail = "MyLocationDetail",
                             MyTypeOfConflict = ConflictType.TypeOfConflict.Train,
                             MySubtypeOfConflict = new SubtypeOfConflict
@@ -588,11 +627,39 @@ namespace ConflictManagementLibrary.View
                                 MyTypeOfResolution = ConflictResolution.TypeOfResolution.HoldOtherTrain
                             },
                             MyDateTime = DateTime.Now,
+                            MyReservation = new Reservation()
+                            {
+                            },
+                        },
+                        new Conflict
+                        {
+                            MyLocationDetail = "AnotherLocationDetail",
+                            MyTypeOfConflict = ConflictType.TypeOfConflict.Train,
+                            MySubtypeOfConflict = new SubtypeOfConflict
+                            {
+                                MyDescription = "AnotherDESC",
+                                MyConflictType = ConflictType.TypeOfConflict.Train,
+                                MyIndex = 34
+                            },
+                            MyLocation = "AnotherLocation",
+                            MyEntity = new ConflictEntity
+                            {
+                                MyDescription = "AnotherDescription",
+                                MyEntityType = ConflictEntity.EntityType.Train
+                            },
+                            MyResolution = new ConflictResolution
+                            {
+                                MyTypeOfResolution = ConflictResolution.TypeOfResolution.HoldOtherTrain
+                            },
+                            MyDateTime = DateTime.Now.AddHours(-2),
                             MyReservation = new Reservation() { },
-                        }
-                    },
-                },
+                        },
+
+                    }
+
+                }
             };
+
         }
 
         public class DemoSingleTripData
@@ -659,6 +726,42 @@ namespace ConflictManagementLibrary.View
                                 }
                             },
                         },
+                    },
+                    new TimedLocation
+                    {
+                        Description = "PV03_DAR",
+                        ArrivalTimeAdjusted = DateTime.Now,
+                        DepartureTimeAdjusted = DateTime.Now,
+                        MyMovementPlan = new Model.Movement.MovementPlan()
+                        {
+                            Description = "mymovementplanDesc3",
+                            MyRouteActions = new List<Model.Movement.RouteAction>
+                            {
+                                new Model.Movement.RouteAction()
+                                {
+                                    RouteName = "RouteName3",
+                                    ActionLocation = "ActionLocation3"
+                                }
+                            },
+                        },
+                    },
+                    new TimedLocation
+                    {
+                        Description = "PV04_DAR",
+                        ArrivalTimeAdjusted = DateTime.Now,
+                        DepartureTimeAdjusted = DateTime.Now,
+                        MyMovementPlan = new Model.Movement.MovementPlan()
+                        {
+                            Description = "mymovementplanDesc4",
+                            MyRouteActions = new List<Model.Movement.RouteAction>
+                            {
+                                new Model.Movement.RouteAction()
+                                {
+                                    RouteName = "RouteName4",
+                                    ActionLocation = "ActionLocation4"
+                                }
+                            },
+                        },
                     }
                 },
                     MyConflicts = new List<Conflict>
@@ -684,93 +787,4 @@ namespace ConflictManagementLibrary.View
             }
         }
     }
-
-    //public class DemoData
-    //{
-    //    public static List<DemoConflict> GetMockData()
-    //    {
-    //        return new List<DemoConflict>
-    //    {
-    //        new DemoConflict
-    //        {
-    //            MyLocationDetail = "Open Line Between <MAN and ZIE>",
-    //            MyTypeOfConflict = "Open Line Conflict with opposite Direction Train",
-    //            MySubtypeOfConflictMyDescription = "Open Line Conflict with opposite Direction Train",
-    //            MyLocation = "Mangali@2PC_MAN(320400)(E_PT1_MAN_PT4_ZIE)",
-    //            MyEntityMyDescription = "Conflicting Reservation with Trip",
-    //            MyResolutionMyTypeOfResolution = "Hold This Train"
-    //        },
-    //        new DemoConflict
-    //        {
-    //            MyLocationDetail = "Open Line Between <ABC and DEF>",
-    //            MyTypeOfConflict = "Open Line Conflict with Maintenance",
-    //            MySubtypeOfConflictMyDescription = "Open Line Conflict with Maintenance Work",
-    //            MyLocation = "StationX@3PC_ABC(123456)(W_PT2_ABC_PT5_DEF)",
-    //            MyEntityMyDescription = "Conflicting Maintenance Schedule",
-    //            MyResolutionMyTypeOfResolution = "Divert to Alternate Route"
-    //        },
-    //        new DemoConflict
-    //        {
-    //            MyLocationDetail = "Open Line Between <GHI and JKL>",
-    //            MyTypeOfConflict = "Signal Failure",
-    //            MySubtypeOfConflictMyDescription = "Signal Failure Leading to Delays",
-    //            MyLocation = "StationY@4PC_GHI(654321)(N_PT3_GHI_PT6_JKL)",
-    //            MyEntityMyDescription = "Signal Failure at Block Section",
-    //            MyResolutionMyTypeOfResolution = "Send Maintenance Crew"
-    //        },
-    //        new DemoConflict
-    //        {
-    //            MyLocationDetail = "Open Line Between <MNO and PQR>",
-    //            MyTypeOfConflict = "Track Obstruction",
-    //            MySubtypeOfConflictMyDescription = "Track Obstruction Due to Fallen Tree",
-    //            MyLocation = "StationZ@5PC_MNO(987654)(S_PT4_MNO_PT7_PQR)",
-    //            MyEntityMyDescription = "Tree Fallen on Track",
-    //            MyResolutionMyTypeOfResolution = "Clear Obstruction"
-    //        }
-    //      };
-    //    }
-    //}
-
-    //public class DemoLoc
-    //{
-    //    public string Description { get; set; }
-    //    public DateTime ArrivalTimeAdjusted { get; set; }
-    //    public DateTime DepartureTimeAdjusted { get; set; }
-    //}
-
-    //public class DemoPlanData
-    //{
-    //    public static List<DemoLoc> getPlanTripData()
-    //    {
-    //        return new List<DemoLoc>
-    //        {
-    //            new DemoLoc
-    //            {
-    //                Description = "PV01_DAR",
-    //                ArrivalTimeAdjusted = DateTime.Now,
-    //                DepartureTimeAdjusted = DateTime.Now,
-    //            },
-    //             new DemoLoc
-    //            {
-    //                Description = "PV02_DAR",
-    //                ArrivalTimeAdjusted = DateTime.Now,
-    //                DepartureTimeAdjusted = DateTime.Now,
-    //            },
-
-    //              new DemoLoc
-    //            {
-    //                Description = "GA01_UAI",
-    //                ArrivalTimeAdjusted = DateTime.Now,
-    //                DepartureTimeAdjusted = DateTime.Now,
-    //            },
-
-    //               new DemoLoc
-    //            {
-    //                Description = "ABC_142",
-    //                ArrivalTimeAdjusted = DateTime.Now,
-    //                DepartureTimeAdjusted = DateTime.Now,
-    //            },
-    //        };
-    //    }
-    //}
 }

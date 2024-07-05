@@ -6,7 +6,7 @@
     xmlns:local="using:ConflictManagementLibrary.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    Title="Conflict Details" >
 
     <StackPanel x:Name="root" Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid Width="1520" Height="800" CornerRadius="5" BorderBrush="White" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
@@ -51,7 +51,7 @@
             <!-- Conflict Details Section -->
             <StackPanel CornerRadius="5" Background="LightGray" Name="gbConflictSummary" Grid.Column="1" Padding="30 10 30 10" Margin="0 2 0 2">
                 <TextBlock Text="Conflict Details" FontSize="20" FontWeight="Bold" Margin="-20 -8 5 5" />
-                <Grid Margin="5">
+                <Grid Margin="5" Name="gbConflictSummaryGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -66,73 +66,88 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictType" Text="Conflict Type:" Margin="5,10,0,0" Grid.Row="0" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictType" Margin="5,12,0,10" Grid.Row="0" Grid.Column="1"/>
 
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblSubtype" Text="Conflict Subtype:" Margin="5,10,0,0" Grid.Row="1" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtSubtype" Height="130" Margin="5,12,0,10" Grid.Row="1" Grid.Column="1"/>
-
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictLocation" Text="Conflict Location:" Margin="5,10,0,0" Grid.Row="2" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictLocation" Margin="5,12,0,10" Grid.Row="2" Grid.Column="1"/>
-
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictTime" Text="Conflict Time:" Margin="5,10,0,0" Grid.Row="3" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictTime" Margin="5,12,0,10" Grid.Row="3" Grid.Column="1"/>
-
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictEntity" Text="Conflict Entity:" Margin="5,10,0,0" Grid.Row="4" Grid.Column="0"/>
-                    <TextBox  FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictEntity" Margin="5,12,0,10" Grid.Row="4" Grid.Column="1"/>
-
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictDescription" Text="Conflict Description:" Margin="5,10,0,0" Grid.Row="5" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictDescription" Height="130" Margin="5,12,0,10" Grid.Row="5" Grid.Column="1"/>
-
-                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictResolution" Text="Conflict Resolution:" Margin="5,10,0,0" Grid.Row="6" Grid.Column="0"/>
-                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Red" Name="txtConflictResolution" Margin="5,12,0,0" Grid.Row="6" Grid.Column="1"/>
-                </Grid>
-
-                <!-- Buttons Section -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="132,-5,0,20">
-                    <StackPanel.Resources>
-                        <Style TargetType="Button" x:Key="CustomButtonStyle">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="SteelBlue"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Setter Property="Padding" Value="40,10"/>
-                            <Setter Property="FontSize" Value="20"/>
+                    <!-- Define TextBox style -->
+                    <Grid.Resources>
+                        <Style TargetType="TextBox" x:Key="CustomTextBoxStyle">
+                            <Setter Property="Foreground" Value="Red"/>
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Grid>
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
                                                     <VisualState x:Name="Normal"/>
-                                                    <VisualState x:Name="PointerOver">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterElement" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="SteelBlue"/>
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Pressed"/>
+                                                    <VisualState x:Name="PointerOver"/>
                                                     <VisualState x:Name="Disabled"/>
                                                 </VisualStateGroup>
+                                                <VisualStateGroup x:Name="FocusStates">
+                                                    <VisualState x:Name="Focused"/>
+                                                    <VisualState x:Name="Unfocused"/>
+                                                </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
-                                            <ContentPresenter x:Name="ContentPresenterElement" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
+                                            <Border
+                                                x:Name="Border"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ScrollViewer
+                                                    x:Name="ContentElement"
+                                                    Padding="{TemplateBinding Padding}"
+                                                    HorizontalScrollBarVisibility="Hidden"
+                                                    VerticalScrollBarVisibility="Hidden"
+                                                    IsTabStop="False"
+                                                    Margin="0"
+                                                    Foreground="{TemplateBinding Foreground}" />
+                                            </Border>
+                                        </Grid>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </StackPanel.Resources>
-                    <Button Background="FloralWhite" Click="btnAccept_Click" Name="btnAccept" Content="Accept" Style="{StaticResource CustomButtonStyle}" Margin="20,25,0,0"/>
-                    <Button Background="FloralWhite" Click="btnReject_Click" Name="btnReject" Content="Reject" Style="{StaticResource CustomButtonStyle}" Margin="170,25,0,0"/>
+                    </Grid.Resources>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictType" Text="Conflict Type:" Margin="5,10,0,0" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictType" Height="36" Margin="5,12,0,10" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblSubtype" Text="Conflict Subtype:" Margin="5,10,0,0" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold"  Name="txtSubtype" Height="154" Margin="5,12,0,10" Grid.Row="1" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictLocation" Text="Conflict Location:" Margin="5,10,0,0" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictLocation" Height="36" Margin="5,12,0,10" Grid.Row="2" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictTime" Text="Conflict Time:" Margin="5,10,0,0" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictTime" Height="36" Margin="5,12,0,10" Grid.Row="3" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictEntity" Text="Conflict Entity:" Margin="5,10,0,0" Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictEntity" Height="36" Margin="5,12,0,10" Grid.Row="4" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictDescription" Text="Conflict Description:" Margin="5,10,0,0" Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictDescription" Height="100" Margin="5,12,0,10" Grid.Row="5" Grid.Column="1"/>
+
+                    <TextBlock FontWeight="Bold" Foreground="DimGray" Name="lblConflictResolution" Text="Conflict Resolution:" Margin="5,10,0,0" Grid.Row="6" Grid.Column="0"/>
+                    <TextBox  Style="{StaticResource CustomTextBoxStyle}" FontSize="20" FontWeight="Bold" Name="txtConflictResolution" Height="36" Margin="5,12,0,0" Grid.Row="6" Grid.Column="1"/>
+                </Grid>
+
+                <!-- Buttons Section -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="132,-5,0,20">
+                    <Button  Width="138" Height="42" Foreground="SteelBlue" FontSize="20" FontWeight="Bold" Background="FloralWhite" Click="btnAccept_Click" Name="btnAccept" Content="Accept"  Margin="20,25,0,0"/>
+                    <Button Width="138" Height="42" Foreground="SteelBlue" FontSize="20" FontWeight="Bold" Background="FloralWhite" Click="btnReject_Click" Name="btnReject" Content="Reject" Margin="170,25,0,0"/>
                 </StackPanel>
             </StackPanel>
 
             <!-- Trip Details Section -->
             <StackPanel CornerRadius="5" Background="LightGray"  Name="gbRouteDetails" Grid.Column="2" Padding="1" Margin="2">
                 <TextBlock Text="Trip Details" FontSize="20" FontWeight="Bold" Margin="5" />
-                <StackPanel Margin="10,10,10,5" Height="730" Width="500" Background="LightGray" CornerRadius="5" VerticalAlignment="Top">
+                <StackPanel Margin="10,10,10,5" Height="730" Width="480" Background="LightGray" CornerRadius="5" VerticalAlignment="Top">
                     <Grid>
-                        <ListView Name="lvPlan" SelectionMode="Single" IsItemClickEnabled="True" CornerRadius="5" Margin="0 0 0 0" Width="Auto" Height="Auto">
+                        <Grid.Resources>
+                            <Style TargetType="ListViewItem" x:Key="CustomListViewItemStyle">
+                                <Setter Property="Height" Value="25" />
+                                <Setter Property="MinHeight" Value="25" />
+                            </Style>
+                        </Grid.Resources>
+                        <ListView BorderBrush="DarkGray" BorderThickness="1" ItemContainerStyle="{StaticResource CustomListViewItemStyle}" Name="lvPlan"  IsItemClickEnabled="True" Width="Auto" Height="Auto">
                             <ListView.Header>
                                 <Grid Background="White">
                                     <Grid.ColumnDefinitions>
@@ -140,37 +155,17 @@
                                         <ColumnDefinition Width="160"/>
                                         <ColumnDefinition Width="160"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border BorderBrush="Wheat"  BorderThickness="1" Grid.Column="0">
-                                        <TextBlock Name="colLocation" Text="Platform"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                    <Border Padding="4" BorderBrush="LightGray" BorderThickness="1 1 0 1" Grid.Column="0">
+                                        <TextBlock Name="colLocation" Text="Platform"  FontWeight="Bold" FontSize="12" TextAlignment="Left"/>
                                     </Border>
-                                    <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="1">
-                                        <TextBlock  Name="colArrival" Text="Arrival"   FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                    <Border  Padding="4" BorderBrush="LightGray" BorderThickness="1 1 0 1" Grid.Column="1">
+                                        <TextBlock  Name="colArrival" Text="Arrival"   FontWeight="Bold" FontSize="12" TextAlignment="Left"/>
                                     </Border>
-                                    <Border BorderBrush="Wheat" BorderThickness="1" Grid.Column="2">
-                                        <TextBlock  Name="colDepart" Text="Depart"  FontWeight="Bold" FontSize="14" TextAlignment="Center"/>
+                                    <Border Padding="4" BorderBrush="LightGray" BorderThickness="1" Grid.Column="2">
+                                        <TextBlock  Name="colDepart" Text="Depart"  FontWeight="Bold" FontSize="12" TextAlignment="Left"/>
                                     </Border>
                                 </Grid>
                             </ListView.Header>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Name="GridCol">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="160"/>
-                                            <ColumnDefinition Width="160"/>
-                                            <ColumnDefinition Width="160"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border BorderBrush="White" BorderThickness="1" Grid.Column="0">
-                                            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border>
-                                        <Border BorderBrush="White" BorderThickness="1" Grid.Column="0">
-                                            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding ArrivalTimeAdjusted}" />
-                                        </Border>
-                                        <Border BorderBrush="White" BorderThickness="1" Grid.Column="2">
-                                            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding DepartureTimeAdjusted}" />
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
                 </StackPanel>
