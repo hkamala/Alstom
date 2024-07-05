@@ -21,7 +21,7 @@
             <MenuBar Padding="10,5" CornerRadius="5">
                 <MenuBarItem Title="Control">
                     <MenuFlyoutSubItem Text="Auto Routing">
-                        <MenuFlyoutItem Text="Auto Routing" Click="mnuAutoRouting_Click"/>
+                        <MenuFlyoutItem Name="mnuAutoRouting" Text="Auto Routing" Click="mnuAutoRouting_Click"/>
                     </MenuFlyoutSubItem>
                 </MenuBarItem>
             </MenuBar>
@@ -29,7 +29,9 @@
 
         <!-- ListView with ScrollViewer -->
         <StackPanel Grid.Row="1" Margin="5" Background="LightGray" CornerRadius="5">
-            <ListView Name="lvTrips" SelectionMode="Single" Height="270" Margin="5"  IsItemClickEnabled="True" CornerRadius="5" ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="LightGray">
+            <ListView Name="lvTrips" SelectionMode="Single" Height="270" Margin="5" IsItemClickEnabled="True"
+ItemClick="lvTrips_ItemClick" CornerRadius="5" ScrollViewer.VerticalScrollMode="Enabled"
+ScrollViewer.VerticalScrollBarVisibility="Visible" Background="LightGray">
                 <ListView.Header>
                     <Grid Background="White" Height="30" Margin="2" CornerRadius="5">
                         <Grid.ColumnDefinitions>
@@ -58,9 +60,18 @@
                         <TextBlock Text="# Conflicts" Grid.Column="10" FontWeight="Bold" FontSize="14" Margin="10,5" TextAlignment="Left"/>
                     </Grid>
                 </ListView.Header>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Trip">
                         <Grid>
+							<Grid.ContextFlyout>
+								<MenuFlyout x:Name="RightClickMenu">
+									<MenuFlyoutItem Text="Show Reservations" Click="ShowReservations_Click"/>
+									<MenuFlyoutItem Text="Show Route Plan" Click="ShowRoutePlan_Click"/>
+									<MenuFlyoutItem Text="Delete Trip" Click="DeleteTrip_Click"/>
+									<MenuFlyoutItem Text="Save Trip" Click="SaveTrip_Click"/>
+								</MenuFlyout>
+							</Grid.ContextFlyout>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="90"/>
                                 <ColumnDefinition Width="80"/>

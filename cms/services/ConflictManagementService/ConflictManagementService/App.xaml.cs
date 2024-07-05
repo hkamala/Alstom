@@ -1,4 +1,5 @@
-﻿using ConflictManagementLibrary.View;
+﻿using ConflictManagementLibrary.Management;
+using ConflictManagementLibrary.View;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -34,6 +35,8 @@ namespace ConflictManagementService
         public App()
         {
             this.InitializeComponent();
+            //InitializeLibrary();
+            //ApplicationConfiguration.Initialize();
         }
 
         /// <summary>
@@ -48,5 +51,11 @@ namespace ConflictManagementService
         }
 
         private Window m_window;
+        public static ConflictManagementLibrary.Management.InitializationManager MyInitializationManager;
+
+        private static void InitializeLibrary()
+        {
+            MyInitializationManager = InitializationManager.CreateInstance();
+        }
     }
 }
