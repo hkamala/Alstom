@@ -6,9 +6,10 @@
     xmlns:local="using:ConflictManagementLibrary.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Title="Trip Reservations">
 
-    <Grid x:Name="root" Height="Auto" Width="Auto" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="root" Height="Auto" Width="Auto" Background="LightBlue">
         <ScrollView HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="10,10,10,5" Height="780" Width="1760" Background="LightGray" CornerRadius="5" VerticalAlignment="Top">
                 <Grid>

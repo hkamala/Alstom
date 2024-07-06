@@ -40,6 +40,8 @@ namespace ConflictManagementLibrary.Model.Reservation
         [JsonIgnore] public string? ScheduledPlanId { get; set; }
         [JsonIgnore] public string? ScheduledPlanName { get; set; }
         [JsonIgnore] public string? ScheduledPlanDayCode { get; set; }
+        private readonly IMyLogger? theLogger;
+
 
         public Reservation(string theStation, Node theNode, Path? thePath, Link theLink, TimedLocation theTimedLocation, TimedLocation theNextTimedLocation, Trip.Trip theTrip)
         {
@@ -96,7 +98,10 @@ namespace ConflictManagementLibrary.Model.Reservation
             MyTimedLocation = theTimedLocation;
             MyNextTimedLocation = theNextTimedLocation;
         }
-
+        public Reservation(IMyLogger? theLogger)
+        {
+            this.theLogger = theLogger;
+        }
         [JsonConstructor]
         public Reservation()
         {
