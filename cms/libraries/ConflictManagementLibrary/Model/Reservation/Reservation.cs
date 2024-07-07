@@ -15,6 +15,10 @@ namespace ConflictManagementLibrary.Model.Reservation
     {
         public string MyGuid = DateTime.Now.ToString("yyyyMMddHHmmssffff");//Guid.NewGuid().ToString();
         public string? MyStationName { get; set; }
+        public string? RouteName { get; set; }
+        public string? BeginPlatform { get; set; }
+        public string? EndPlatform { get; set; }
+
         public Station? MyStation { get; set; }
         public Node? MyNode { get; set; }
         public string? MyNodeNumber { get; set; }
@@ -32,7 +36,9 @@ namespace ConflictManagementLibrary.Model.Reservation
         public int? MyTripId { get; set; }
         public string? MyTripCode { get; set; }
         public string? MyTripStartTime { get; set; }
+        public string? MyTripEndTime { get; set; }
         public string? TotalTimeInSeconds { get; set; }
+        public string? DwellTimeinSeconds { get; set; }
         public string? MyTripGuid { get; set; }
         public bool HasBeenReleased { get; set; }
         [JsonIgnore] public int? MyMetersPerSecond { get; set; }

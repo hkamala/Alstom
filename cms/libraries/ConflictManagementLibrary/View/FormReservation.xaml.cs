@@ -36,8 +36,8 @@ namespace ConflictManagementLibrary.View
         {
             this.InitializeComponent();
             //this.Title = "Trip Reservations";
-            SizeInt32 size = new SizeInt32(1531, 647);
-            this.AppWindow.Resize(size);
+            //SizeInt32 size = new SizeInt32(1531, 647);
+            //this.AppWindow.Resize(size);
             GetAppWindowAndPresenter();
 
             _presenter.IsResizable = false;
@@ -69,26 +69,20 @@ namespace ConflictManagementLibrary.View
 
         private void LoadData()
         {
-            var trips = TripDataGenerator.GenerateTrips(MyLogger);
-            //lvTrips.ItemsSource = trips;
+            var reservations = ReservationDataGenerator.GenerateReservations(MyLogger);
+            lvReservations.ItemsSource = reservations;
         }
 
         public class ReservationDataGenerator
         {
-            public static List<Reservation> GenerateResrvations(IMyLogger logger)
+            public static List<Reservation> GenerateReservations(IMyLogger logger)
             {
                 return new List<Reservation>
                 {
-                    new Reservation(logger) { MyStationName = "StationName1", MyNodeNumber = "01", MyLinkReferenceUid = "01uidL", MyEdgeUid = "01-EDG", SubType = Trip.TrainSubType.Freight, Length = 0, Postfix = Trip.PostFixType.G, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 1, TripId = 102, Direction = "R", StartTime = "06/28/24 06:12", TypeOfTrain = Trip.TrainType.Freight, SubType = Trip.TrainSubType.Suburban, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 1, TripId = 103, Direction = "L", StartTime = "06/28/24 06:24", TypeOfTrain = Trip.TrainType.Passenger, SubType = Trip.TrainSubType.Spare, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 1, TripId = 104, Direction = "R", StartTime = "06/28/24 06:24", TypeOfTrain = Trip.TrainType.Default, SubType = Trip.TrainSubType.Train, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 2, TripId = 201, Direction = "L", StartTime = "06/28/24 09:48", TypeOfTrain = Trip.TrainType.Passenger, SubType = Trip.TrainSubType.Passenger, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 2, TripId = 202, Direction = "R", StartTime = "06/28/24 09:48", TypeOfTrain = Trip.TrainType.Freight, SubType = Trip.TrainSubType.Suburban, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 0 },
-                    new Reservation(logger) { SerUid = 3, TripId = 301, Direction = "L", StartTime = "06/28/24 12:12", TypeOfTrain = Trip.TrainType.Passenger, SubType = Trip.TrainSubType.Repair, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 1 },
-                    new Reservation(logger) { SerUid = 3, TripId = 302, Direction = "R", StartTime = "06/28/24 12:12", TypeOfTrain = Trip.TrainType.Freight, SubType = Trip.TrainSubType.FastFreight, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 1 },
-                    new Reservation(logger) { SerUid = 3, TripId = 303, Direction = "L", StartTime = "06/28/24 12:14", TypeOfTrain = Trip.TrainType.Passenger, SubType = Trip.TrainSubType.Local, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 2 },
-                    new Reservation(logger) { SerUid = 3, TripId = 304, Direction = "R", StartTime = "06/28/24 12:14", TypeOfTrain = Trip.TrainType.Default, SubType = Trip.TrainSubType.Locomotive, Length = 0, Postfix = Trip.PostFixType.None, StartPosition = "PVO1_DAR", EndPosition = "P1C_SKU", ConflictCount = 2 }
+                    new Reservation(logger) { MyStationName = "StationName1", MyNodeNumber = "01", MyLinkReferenceUid = "01uidL", MyEdgeUid = "01-EDG", RouteName = "SmplRteName", BeginPlatform = "SmplBgnPlf", EndPlatform = "SmplEndPlatform", MyTripStartTime = "06/06/24 06:12", MyTripEndTime = "06/06/24 16:12", TotalTimeInSeconds = "36000", DwellTimeinSeconds = "36000"},
+                    new Reservation(logger) { MyStationName = "StationName2", MyNodeNumber = "02", MyLinkReferenceUid = "02uidL", MyEdgeUid = "02-EDG", RouteName = "SmplRteName", BeginPlatform = "SmplBgnPlf", EndPlatform = "SmplEndPlatform", MyTripStartTime = "06/07/24 08:36", MyTripEndTime = "06/07/24 18:40", TotalTimeInSeconds = "50100", DwellTimeinSeconds = "50100"},
+                    new Reservation(logger) { MyStationName = "StationName3", MyNodeNumber = "03", MyLinkReferenceUid = "03uidL", MyEdgeUid = "03-EDG", RouteName = "SmplRteName", BeginPlatform = "SmplBgnPlf", EndPlatform = "SmplEndPlatform", MyTripStartTime = "06/08/24 23:07", MyTripEndTime = "06/08/24 06:13", TotalTimeInSeconds = "60840", DwellTimeinSeconds = "60840"},
+                    new Reservation(logger) { MyStationName = "StationName4", MyNodeNumber = "04", MyLinkReferenceUid = "04uidL", MyEdgeUid = "04-EDG", RouteName = "SmplRteName", BeginPlatform = "SmplBgnPlf", EndPlatform = "SmplEndPlatform", MyTripStartTime = "06/08/24 12:56", MyTripEndTime = "06/08/24 16:43", TotalTimeInSeconds = "13620", DwellTimeinSeconds = "13620"},
                 };
             }
         }
