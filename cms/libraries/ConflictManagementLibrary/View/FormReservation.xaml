@@ -48,7 +48,13 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="local:Reservation">
                                     <Grid>
-                                        <Grid.ColumnDefinitions>
+                                    <Grid.ContextFlyout>
+                                        <MenuFlyout x:Name="RightClickMenu">
+                                            <MenuFlyoutItem Text="Send Route"/>
+                                            <MenuFlyoutItem Text="Generate Conflict"/>
+                                        </MenuFlyout>
+                                    </Grid.ContextFlyout>
+                                    <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="120"/>
                                             <ColumnDefinition Width="70"/>
                                             <ColumnDefinition Width="70"/>
