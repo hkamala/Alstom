@@ -15,6 +15,10 @@ namespace ConflictManagementLibrary.Model.Reservation
     {
         public string MyGuid = DateTime.Now.ToString("yyyyMMddHHmmssffff");//Guid.NewGuid().ToString();
         public string? MyStationName { get; set; }
+        public string? RouteName { get; set; }
+        public string? BeginPlatform { get; set; }
+        public string? EndPlatform { get; set; }
+
         public Station? MyStation { get; set; }
         public Node? MyNode { get; set; }
         public string? MyNodeNumber { get; set; }
@@ -32,7 +36,9 @@ namespace ConflictManagementLibrary.Model.Reservation
         public int? MyTripId { get; set; }
         public string? MyTripCode { get; set; }
         public string? MyTripStartTime { get; set; }
+        public string? MyTripEndTime { get; set; }
         public string? TotalTimeInSeconds { get; set; }
+        public string? DwellTimeinSeconds { get; set; }
         public string? MyTripGuid { get; set; }
         public bool HasBeenReleased { get; set; }
         [JsonIgnore] public int? MyMetersPerSecond { get; set; }
@@ -40,6 +46,8 @@ namespace ConflictManagementLibrary.Model.Reservation
         [JsonIgnore] public string? ScheduledPlanId { get; set; }
         [JsonIgnore] public string? ScheduledPlanName { get; set; }
         [JsonIgnore] public string? ScheduledPlanDayCode { get; set; }
+        private readonly IMyLogger? theLogger;
+
 
         public Reservation(string theStation, Node theNode, Path? thePath, Link theLink, TimedLocation theTimedLocation, TimedLocation theNextTimedLocation, Trip.Trip theTrip)
         {
@@ -96,7 +104,10 @@ namespace ConflictManagementLibrary.Model.Reservation
             MyTimedLocation = theTimedLocation;
             MyNextTimedLocation = theNextTimedLocation;
         }
-
+        public Reservation(IMyLogger? theLogger)
+        {
+            this.theLogger = theLogger;
+        }
         [JsonConstructor]
         public Reservation()
         {
